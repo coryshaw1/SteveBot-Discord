@@ -1,0 +1,44 @@
+{
+  "name": "SteveBot-Discord",
+  "version": "0.0.1",
+  "description": "Basic Discord bot with modular command structure",
+  "keywords": [
+    "Discord",
+    "Node.js",
+    "bot",
+    "twitch",
+    "commands"
+  ],
+  "author": {
+    "name": "Cory Shaw",
+    "email": "cory.shaw.dev@gmail.com",
+    "url": "coryshaw.us"
+  },
+  "homepage": "http://github.com/coryshaw1/SteveBot-Discord",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/coryshaw1/SteveBot-Discord"
+  },
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "dependencies": {
+    "botbuilder": "3.2.3",
+    "discord.io": "^2.3.0",
+    "express": "~3.4.4",
+    "moment": "^2.14.1",
+    "node-holidayapi": "^1.0.2",
+    "path": "^0.12.7",
+    "request": "^2.74.0",
+    "restify": "^4.1.1",
+    "urban": "^0.3.1"
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}

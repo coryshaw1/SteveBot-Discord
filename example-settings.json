@@ -1,0 +1,8 @@
+{
+    "BREWERYDB_API_KEY": "api_key_here",
+    "COMMAND_PREFIX": "!",
+    "DISCORD_BOT_TOKEN": "bot_token_here",
+    "DUBTRACK_ROOM_ID": "dubtrack_room_id_here",
+    "GIPHY_API_KEY": "api_key_here",
+    "HOLIDAY_API_KEY": "api_key_here"
+}
