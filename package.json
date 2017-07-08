@@ -24,9 +24,7 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "botbuilder": "3.2.3",
     "discord.io": "^2.3.0",
-    "express": "~3.4.4",
     "moment": "^2.14.1",
     "node-holidayapi": "^1.0.2",
     "path": "^0.12.7",
