@@ -1,11 +1,11 @@
 var HolidayAPI = require('node-holidayapi');
-var settings = require(process.cwd() + "/settings.json");
+var settings = require(process.cwd() + '/settings.json');
 var hapi = new HolidayAPI(settings.HOLIDAY_API_KEY).v1;
 var moment = require('moment');
 
-module.exports = function(bot, data) {
+module.exports = function (bot, data) {
     var parameters = {
-        // Required
+    // Required
         country: 'US',
         year: new Date().getFullYear(),
         // Optional
@@ -13,34 +13,35 @@ module.exports = function(bot, data) {
         day: new Date().getDate(),
         // previous: true,
         // upcoming: true,
-        public: false,
-        // pretty:   true,
+        public: false
+    // pretty:   true,
     };
 
-    hapi.holidays(parameters, function(err, data) {
-        if (data.status !== 200)
+    hapi.holidays(parameters, function (err, data) {
+        if (data.status !== 200) {
             return bot.sendMessage({
                 to: data.channelID,
-                message: "Bad request to holidays..."
+                message: 'Bad request to holidays...'
             });
+        }
 
-        if (data.holidays.length == 0)
+        if (data.holidays.length === 0) {
             return bot.sendMessage({
                 to: data.channelID,
-                message: "There are no holidays today, " + moment().format('LL')
+                message: 'There are no holidays today, ' + moment().format('LL')
             });
+        }
 
         var plural = data.holidays.length > 1;
         bot.sendMessage({
             to: data.channelID,
-            message: moment().format('LL') + "has " + data.holidays.length + " " + (plural ? "holidays" : "holiday")
+            message: moment().format('LL') + 'has ' + data.holidays.length + ' ' + (plural ? 'holidays' : 'holiday')
         });
         var holidaysMessage = '';
-        data.holidays.forEach(function(holiday, index) {
+        data.holidays.forEach(function (holiday, index) {
             holidaysMessage += holiday.name;
 
-            if (data.holidays.length != (index + 1))
-                holidaysMessage += "\n";
+            if (data.holidays.length !== (index + 1)) { holidaysMessage += '\n'; }
         });
 
         bot.sendMessage({
@@ -48,4 +49,4 @@ module.exports = function(bot, data) {
             message: holidaysMessage
         });
     });
-}
+};

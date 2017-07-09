@@ -1,13 +1,13 @@
 var Discord = require('discord.io');
-var pkg = require(process.cwd() + "/package.json");
-var settings = require(process.cwd() + "/settings.json");
-var twitch = require(process.cwd() + "/plugins/twitch");
+var pkg = require(process.cwd() + '/package.json');
+var settings = require(process.cwd() + '/settings.json');
+var twitch = require(process.cwd() + '/plugins/twitch');
 var fs = require('fs');
-var path = require("path");
-var request = require("request").defaults({ encoding: null });
+var path = require('path');
+var request = require('request').defaults({ encoding: null });
 var commands = {};
 
-module.exports = function() {
+module.exports = function () {
     var bot = new Discord.Client({
         token: settings.DISCORD_BOT_TOKEN,
         autorun: true
@@ -16,14 +16,13 @@ module.exports = function() {
     initializeCommands();
     initializeTwitchCommands();
 
-    bot.on('ready', function() {
-        console.log(bot.username + " - (" + bot.id + ")");
+    bot.on('ready', function () {
+        console.log(bot.username + ' - (' + bot.id + ') - Version: ' + pkg.version);
     });
-    
-    bot.on('message', function(user, userID, channelID, message, event) {
 
-        //Don't try to run commands by itself
-        if(user === bot.username) return;
+    bot.on('message', function (user, userID, channelID, message, event) {
+    // Don't try to run commands by itself
+        if (user === bot.username) return;
 
         var data = {
             user: user,
@@ -37,35 +36,33 @@ module.exports = function() {
     });
 
     function initializeCommands () {
-        //cache all the commands here by auto requiring them and passing the bot
-        //supports directories no matter how deep you go. twss
-        var cmd = process.cwd() + "/discord/commands";
-        var walk = function(dir) {
-            if(dir.indexOf("nsfw") > -1) return; //for "253960036475207680"
+    // cache all the commands here by auto requiring them and passing the bot
+    // supports directories no matter how deep you go. twss
+        var cmd = process.cwd() + '/discord/commands';
+        var walk = function (dir) {
+            if (dir.indexOf('nsfw') > -1) return; // for "253960036475207680"
 
-            fs.readdirSync(dir).forEach(function(file) {
+            fs.readdirSync(dir).forEach(function (file) {
                 var _path = path.resolve(dir, file);
-                fs.stat(_path, function(err, stat) {
+                fs.stat(_path, function (err, stat) {
                     if (stat && stat.isDirectory()) {
                         walk(_path);
                     } else {
-                        if (file.indexOf(".js") > -1) {
+                        if (file.indexOf('.js') > -1) {
                             // add commands set in file if they exist
-                            if(typeof(require(_path).extraCommands) !== "undefined"){
-                                if(Array.isArray(require(_path).extraCommands)){
+                            if (typeof (require(_path).extraCommands) !== 'undefined') {
+                                if (Array.isArray(require(_path).extraCommands)) {
                                     // add each command in array into overall commands
-                                    require(_path).extraCommands.forEach(function(command){
+                                    require(_path).extraCommands.forEach(function (command) {
                                         commands[command] = require(_path);
                                     });
-                                }
-                                else {
-                                    throw new TypeError("Invalid extraCommands export for file: " + _path);
+                                } else {
+                                    throw new TypeError('Invalid extraCommands export for file: ' + _path);
                                 }
                             }
-                            
-                            commands[file.split(".")[0]] = require(_path);
-                        }
 
+                            commands[file.split('.')[0]] = require(_path);
+                        }
                     }
                 });
             });
@@ -73,12 +70,11 @@ module.exports = function() {
         walk(cmd);
     }
 
-    function initializeTwitchCommands() {
-
-        //Global emotes
-        twitch.initializeGlobalTwitchEmotes(commands, function(key, url) {
-            commands[key] = function(bot, data) {
-                request(url, function(err, response, buffer) {
+    function initializeTwitchCommands () {
+    // Global emotes
+        twitch.initializeGlobalTwitchEmotes(commands, function (key, url) {
+            commands[key] = function (bot, data) {
+                request(url, function (err, response, buffer) {
                     bot.uploadFile({
                         to: data.channelID,
                         file: buffer,
@@ -88,10 +84,10 @@ module.exports = function() {
             };
         });
 
-        //Subscriber emotes specified in assets/twitch.js
-        twitch.initializeSubscriberTwitchEmotes(commands, function(key, url) {
-            commands[key] = function(bot, data) {
-                request(url, function(err, response, buffer) {
+        // Subscriber emotes specified in assets/twitch.js
+        twitch.initializeSubscriberTwitchEmotes(commands, function (key, url) {
+            commands[key] = function (bot, data) {
+                request(url, function (err, response, buffer) {
                     bot.uploadFile({
                         to: data.channelID,
                         file: buffer,
@@ -101,10 +97,10 @@ module.exports = function() {
             };
         });
 
-        //Bttv emotes
-        twitch.initializeBttvEmotes(commands, function(key, url) {
-            commands[key] = function(bot, data) {
-                request(url, function(err, response, buffer) {
+        // Bttv emotes
+        twitch.initializeBttvEmotes(commands, function (key, url) {
+            commands[key] = function (bot, data) {
+                request(url, function (err, response, buffer) {
                     bot.uploadFile({
                         to: data.channelID,
                         file: buffer,
@@ -115,36 +111,34 @@ module.exports = function() {
         });
     }
 
-    function handleCommand(bot, data) {
-            
-        if(Object.keys(commands).length == 0)
-            return setTimeout(handleCommand(bot, data), 2000);
+    function handleCommand (bot, data) {
+        if (Object.keys(commands).length === 0) { return setTimeout(handleCommand(bot, data), 2000); }
 
-        var cmd = data.message,
-            // array of the command triggers
-            parsedCommands = [];
-        //split the whole message words into tokens
-        var tokens = cmd.split(" ");
-        //command handler
-        tokens.forEach(function(token) {
-            //check if token starts with command prefix and we haven't already parsed command
-            if (token.substr(0, settings.COMMAND_PREFIX.length) === settings.COMMAND_PREFIX 
-                && parsedCommands.indexOf(token.substr(settings.COMMAND_PREFIX.length)) == -1) {
+        var cmd = data.message;
+        // array of the command triggers
+        var parsedCommands = [];
+        // split the whole message words into tokens
+        var tokens = cmd.split(' ');
+        // command handler
+        tokens.forEach(function (token) {
+            // check if token starts with command prefix and we haven't already parsed command
+            if (token.substr(0, settings.COMMAND_PREFIX.length) === settings.COMMAND_PREFIX &&
+                parsedCommands.indexOf(token.substr(settings.COMMAND_PREFIX.length)) === -1) {
                 // add the command used to the data sent from the chat to be used later
                 data.trigger = token.substr(settings.COMMAND_PREFIX.length).toLowerCase();
                 parsedCommands.push(data.trigger);
-                //get index of token in all tokens
+                // get index of token in all tokens
                 var tokenIndex = tokens.indexOf(token);
-                //the params are an array of the remaining tokens
+                // the params are an array of the remaining tokens
                 data.params = tokens.slice(tokenIndex + 1);
-                //execute the command
-                if (typeof(commands[data.trigger]) !== "undefined") {
-                    //notify the user the bot received command by "typing"
+                // execute the command
+                if (typeof (commands[data.trigger]) !== 'undefined') {
+                    // notify the user the bot received command by "typing"
                     bot.simulateTyping();
-                    //passes session the data to the command
+                    // passes session the data to the command
                     commands[data.trigger](bot, data, commands);
                 }
             }
         });
     }
-}
+};

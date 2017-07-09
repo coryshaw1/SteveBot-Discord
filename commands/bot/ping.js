@@ -1,6 +1,6 @@
-module.exports = function(bot, data) {
+module.exports = function (bot, data) {
     bot.sendMessage({
         to: data.channelID,
-        message: "Pong!"
+        message: 'Pong!'
     });
-}
+};
