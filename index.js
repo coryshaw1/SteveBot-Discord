@@ -39,8 +39,6 @@ function initializeCommands () {
 // supports directories no matter how deep you go. twss
     var cmd = process.cwd() + '/commands';
     var walk = function (dir) {
-        if (dir.indexOf('nsfw') > -1) return; // for "253960036475207680"
-
         fs.readdirSync(dir).forEach(function (file) {
             var _path = path.resolve(dir, file);
             fs.stat(_path, function (err, stat) {
