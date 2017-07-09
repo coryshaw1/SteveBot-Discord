@@ -52,4 +52,10 @@ Below are the list of commands that have been implemented.
 ### Info
 * **!commands** - Basic list of commands
 
+### Twitch
+* **!twitch** - List out all added channels and Twitch emote libraries including BetterTTV
+* **!twitch [channelName]** - List out all emotes for given channel name if they have been added
+* **!twitchadd [channelName]** - Add all emotes for specified Twitch channel name
+* **![twitchEmoji]** - Once a Twitch channel has been added with `!twitchadd [channelName]`, you will be able to simply use the emoticon's name as the command. For example: `!sodaG`
+
 Much more to come, and suggestions are welcome! Please add an [issue](https://github.com/coryshaw1/SteveBot-Discord/issues) for any requests or bugs!
