@@ -11,7 +11,7 @@ A Dubtrack Bot using DubAPI
 *Note* - Windows 10 users may need to `npm install --global --production windows-build-tools` first
 
 1. `npm install`
-2. Create `settings.js` using `example-settings.js`, replacing each variable with your credentials
+2. Create a `settings.json` file using a copy of `example-settings.json`, replacing each variable with your credentials
 3. `node index`
 
 ## Thanks
