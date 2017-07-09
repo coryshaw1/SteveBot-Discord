@@ -1,4 +1,4 @@
-# SteveBot-Discord [![Build Status](https://travis-ci.org/coryshaw1/SteveBot-Discord.svg?branch=master)](https://travis-ci.org/coryshaw1/SteveBot-Discord) [![Dependency Status](https://david-dm.org/coryshaw1/SteveBot-Discord.svg)](https://david-dm.org/coryshaw1/SteveBot-Discord) [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/coryshaw1/SteveBot-Discord/blob/master/LICENSE)
+# SteveBot-Discord [![Build Status](https://travis-ci.org/coryshaw1/SteveBot-Discord.svg?branch=master)](https://travis-ci.org/coryshaw1/SteveBot-Discord) [![Dependency Status](https://david-dm.org/coryshaw1/SteveBot-Discord.svg)](https://david-dm.org/coryshaw1/SteveBot-Discord) [![License](https://img.shields.io/github/license/coryshaw1/stevebot-discord.svg)](https://github.com/coryshaw1/SteveBot-Discord/blob/master/LICENSE)
 A Dubtrack Bot using DubAPI
 
 [List of commands](#commands)
