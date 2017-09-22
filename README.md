@@ -1,7 +1,8 @@
 # SteveBot-Discord [![Build Status](https://travis-ci.org/coryshaw1/SteveBot-Discord.svg?branch=master)](https://travis-ci.org/coryshaw1/SteveBot-Discord) [![Dependency Status](https://david-dm.org/coryshaw1/SteveBot-Discord.svg)](https://david-dm.org/coryshaw1/SteveBot-Discord) [![License](https://img.shields.io/github/license/coryshaw1/stevebot-discord.svg)](https://github.com/coryshaw1/SteveBot-Discord/blob/master/LICENSE)
 A Dubtrack Bot using DubAPI
 
-[List of commands](#commands)
+[Adding commands](#commands)
+[List of commands](#commandslist)
 
 ## Requirements
 1. Node
@@ -17,7 +18,35 @@ A Dubtrack Bot using DubAPI
 ## Thanks
 * [izy521/discord.io](https://github.com/izy521/discord.io) by [@izy521](https://github.com/izy521/discord.io)
 
-# [Commands](#commands)
+# [Adding Commands](#commands)
+
+1. Simply add a `.js` file anywhere inside the `commands` directory (sub-directories are supported). The name of the file will be used as the command, so `ping.js` will add a `ping` command. By default `!ping`, which is based on the `COMMAND_PREFIX` setting that defaults to `!`.
+2. The `.js` just needs to export a single function that takes in 2 parameters, preferrably `bot` and `data`
+```js
+module.exports = function (bot, data) {
+};
+```
+* `bot` is the discord.io bot object, used for controlling the bot. Check out the [discord.io docs](https://izy521.gitbooks.io/discord-io/content/) for more info on how to control the bot.
+* `data` is the data of chat command. Available properties of `data` are:
+```js
+data.user //user object of who sent the chat message
+data.userID //userID of who sent the chat message
+data.channelID //Discord channelID of where the chat message was sent
+data.message //Message body of chat message
+data.event //Event object of chat message
+```
+3. Now that we have the necessary objects and information, we can simply make the bot respond to the `!ping` command with a message
+```js
+module.exports = function (bot, data) {
+    bot.sendMessage({
+        to: data.channelID,
+        message: 'Pong!'
+    });
+};
+```
+* We use the `bot` object passed in the parameters to call the `sendMessage` method. Then using the `data` parameter, we're able to send the message back to the same `channelID` where the command came from!
+
+# [Commands List](#commandslist)
 Below are the list of commands that have been implemented.
 ## Categories
 
