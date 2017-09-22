@@ -104,7 +104,7 @@ module.exports.initializeSubscriberTwitchEmotes = function (commands, callback) 
 };
 
 module.exports.initializeBttvEmotes = function (commands, callback) {
-    request('http://api.betterttv.net/2/emotes', function (error, response, body) {
+    request('https://api.betterttv.net/2/emotes', function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
 
