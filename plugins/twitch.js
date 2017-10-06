@@ -47,7 +47,7 @@ module.exports.initializeTotalTwitchEmotes = function (commands, callback) {
 };
 
 module.exports.initializeGlobalTwitchEmotes = function (commands, callback) {
-    request('https://twitchemotes.com/api_cache/v2/global.json', function (error, response, body) {
+    request('https://twitchemotes.com/api_cache/v3/global.json', function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
 
@@ -72,7 +72,7 @@ module.exports.initializeGlobalTwitchEmotes = function (commands, callback) {
 module.exports.initializeSubscriberTwitchEmotes = function (commands, callback) {
     console.log('start:twitch subscriber');
     // TODO: Cache subscriber json and update only 30 minutes, do queries on cache
-    request('https://twitchemotes.com/api_cache/v2/subscriber.json', function (error, response, body) {
+    request('https://twitchemotes.com/api_cache/v3/subscriber.json', function (error, response, body) {
         console.log('finish:twitch subscriber');
         if (!error && response.statusCode === 200 && body && body.length > 10) {
             var data = JSON.parse(body);
@@ -133,7 +133,7 @@ module.exports.addTwitchChannel = function (channelName, commands, commandCallba
 
     messageCallback("Searching for channel '" + channelName + "'");
 
-    request('https://twitchemotes.com/api_cache/v2/subscriber.json', function (error, response, body) {
+    request('https://twitchemotes.com/api_cache/v3/subscriber.json', function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
 
